@@ -2,8 +2,14 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom'
 import { CartProvider } from './context/CartContext'
 import { WishlistProvider } from './context/WishlistContext'
+import { AuthProvider } from './context/AuthContext'
+import ProtectedRoute from './components/ProtectedRoute'
+import ErrorBoundary from './components/ErrorBoundary'
 import Home from './Screens/Main/Home'
 import SignUp from './Screens/Auth/SignUp'
+import Login from './Screens/Auth/Login'
+import ForgotPassword from './Screens/Auth/ForgotPassword'
+import ResetPassword from './Screens/Auth/ResetPassword'
 import SearchPage from './Screens/Main/SearchPage'
 import CartPage from './Screens/Main/CartPage'
 import WishlistPage from './Screens/Main/WishlistPage'
@@ -24,26 +30,85 @@ const Layout = () => {
 
 const App = () => {
   return (
-    <CartProvider>
-      <WishlistProvider>
-        <Router>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="signup" element={<SignUp />} />
-              <Route path="search" element={<SearchPage />} />
-              <Route path="cart" element={<CartPage />} />
-              <Route path="wishlist" element={<WishlistPage />} />
-              <Route path="profile" element={<ProfilePage />} />
-              <Route path="categories" element={<CategoriesPage />} />
-              <Route path="deals" element={<DealsPage />} />
-              <Route path="shops" element={<ShopsPage />} />
-              <Route path="gift-cards" element={<GiftCardsPage />} />
-            </Route>
-          </Routes>
-        </Router>
-      </WishlistProvider>
-    </CartProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <CartProvider>
+          <WishlistProvider>
+            <Router>
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route index element={<Home />} />
+                  
+                  {/* Auth Routes - No authentication required */}
+                  <Route path="signup" element={
+                    <ProtectedRoute requireAuth={false}>
+                      <SignUp />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="login" element={
+                    <ProtectedRoute requireAuth={false}>
+                      <Login />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="forgot-password" element={
+                    <ProtectedRoute requireAuth={false}>
+                      <ForgotPassword />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="reset-password" element={
+                    <ProtectedRoute requireAuth={false}>
+                      <ResetPassword />
+                    </ProtectedRoute>
+                  } />
+                  
+                  {/* Protected Routes - Authentication required */}
+                  <Route path="search" element={
+                    <ProtectedRoute>
+                      <SearchPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="cart" element={
+                    <ProtectedRoute>
+                      <CartPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="wishlist" element={
+                    <ProtectedRoute>
+                      <WishlistPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="profile" element={
+                    <ProtectedRoute>
+                      <ProfilePage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="categories" element={
+                    <ProtectedRoute>
+                      <CategoriesPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="deals" element={
+                    <ProtectedRoute>
+                      <DealsPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="shops" element={
+                    <ProtectedRoute>
+                      <ShopsPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="gift-cards" element={
+                    <ProtectedRoute>
+                      <GiftCardsPage />
+                    </ProtectedRoute>
+                  } />
+                </Route>
+              </Routes>
+            </Router>
+          </WishlistProvider>
+        </CartProvider>
+      </AuthProvider>
+    </ErrorBoundary>
   )
 }
 

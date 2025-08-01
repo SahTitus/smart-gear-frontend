@@ -1,10 +1,10 @@
 import React from 'react'
-import logo from '@/assets/logo.png';
-import ellipse3 from '@/assets/signin/Ellipse 3.svg';
-import ellipse2 from '@/assets/signin/Ellipse 2.svg';
-import ellipse5 from '@/assets/signin/Ellipse 5.svg';
-import ellipse7 from '@/assets/signin/Ellipse 7.svg';
-import ellipse4 from '@/assets/signin/Ellipse 4.svg';
+import logo from '../../assets/logo.png';
+import ellipse3 from '../../assets/signin/Ellipse 3.svg';
+import ellipse2 from '../../assets/signin/Ellipse 2.svg';
+import ellipse5 from '../../assets/signin/Ellipse 5.svg';
+import ellipse7 from '../../assets/signin/Ellipse 7.svg';
+import ellipse4 from '../../assets/signin/Ellipse 4.svg';
 
 const AuthSplash = () => {
   return (

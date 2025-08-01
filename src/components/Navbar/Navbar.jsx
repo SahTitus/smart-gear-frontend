@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
+import { useAuth } from '../../context/AuthContext';
 
 // Assuming your logo image is in src/assets or public folder
 // If it's in public, you can use '/your-logo.png'
 import Logo from '../../assets/logo.png'; 
-import { Heart, Menu, Search, ShoppingCart, User, X } from 'lucide-react';
+import { Heart, Menu, Search, ShoppingCart, User, X, LogOut } from 'lucide-react';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -17,6 +18,7 @@ const Navbar = () => {
   // Use global cart and wishlist state
   const { totalItems: cartItems } = useCart();
   const { totalItems: wishlistItems } = useWishlist();
+  const { user, isAuthenticated, logout } = useAuth();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -41,6 +43,15 @@ const Navbar = () => {
 
   const isActive = (path) => {
     return location.pathname === path;
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   return (
@@ -98,12 +109,33 @@ const Navbar = () => {
                   <Search size={16} />
                 </button>
               </form>
-              <Link 
-                to="/profile" 
-                className="flex items-center hover:text-gray-800 transition duration-200 ease-in-out"
-              >
-                <User />
-              </Link>
+              {isAuthenticated() ? (
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm text-gray-600">
+                    Hi, {user?.username || user?.email || 'User'}
+                  </span>
+                  <Link 
+                    to="/profile" 
+                    className="flex items-center hover:text-gray-800 transition duration-200 ease-in-out"
+                  >
+                    <User />
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center hover:text-gray-800 transition duration-200 ease-in-out"
+                    title="Logout"
+                  >
+                    <LogOut size={16} />
+                  </button>
+                </div>
+              ) : (
+                <Link 
+                  to="/login" 
+                  className="flex items-center hover:text-gray-800 transition duration-200 ease-in-out"
+                >
+                  <User />
+                </Link>
+              )}
               <Link 
                 to="/cart" 
                 className="flex items-center hover:text-gray-800 transition duration-200 ease-in-out relative"
@@ -193,16 +225,46 @@ const Navbar = () => {
                 </Link>
                 {/* Mobile Icons (with text labels) */}
                 <div className="border-t border-gray-200 w-full my-2 pt-2"></div> {/* Separator */}
-                <Link 
-                  to="/profile" 
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`py-2 hover:text-gray-900 w-full text-left flex items-center transition duration-200 ease-in-out ${isActive('/profile') ? 'text-green-500' : ''}`}
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.125a7.5 7.5 0 0014.998 0M6 18a3 3 0 01-3-3h15a3 3 0 01-3 3H6z" />
-                  </svg>
-                  <span>Profile</span>
-                </Link>
+                {isAuthenticated() ? (
+                  <>
+                    <div className="py-2 text-sm text-gray-600">
+                      Hi, {user?.username || user?.email || 'User'}
+                    </div>
+                    <Link 
+                      to="/profile" 
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`py-2 hover:text-gray-900 w-full text-left flex items-center transition duration-200 ease-in-out ${isActive('/profile') ? 'text-green-500' : ''}`}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.125a7.5 7.5 0 0014.998 0M6 18a3 3 0 01-3-3h15a3 3 0 01-3 3H6z" />
+                      </svg>
+                      <span>Profile</span>
+                    </Link>
+                    <button
+                      onClick={() => {
+                        handleLogout();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="py-2 hover:text-gray-900 w-full text-left flex items-center transition duration-200 ease-in-out"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+                      </svg>
+                      <span>Logout</span>
+                    </button>
+                  </>
+                ) : (
+                  <Link 
+                    to="/login" 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`py-2 hover:text-gray-900 w-full text-left flex items-center transition duration-200 ease-in-out ${isActive('/login') ? 'text-green-500' : ''}`}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-2">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.125a7.5 7.5 0 0014.998 0M6 18a3 3 0 01-3-3h15a3 3 0 01-3 3H6z" />
+                    </svg>
+                    <span>Sign In</span>
+                  </Link>
+                )}
                 <Link 
                   to="/cart" 
                   onClick={() => setIsMobileMenuOpen(false)}

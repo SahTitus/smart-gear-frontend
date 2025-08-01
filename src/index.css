@@ -4,6 +4,17 @@
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
 }
 
+/* Button background styles */
+.btn-background {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    background-color: #10b981;
+}
+
+.btn-background:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    background-color: #059669;
+}
+
 /* Line clamp utilities */
 .line-clamp-1 {
   overflow: hidden;
