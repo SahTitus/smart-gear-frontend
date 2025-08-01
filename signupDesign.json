@@ -1,0 +1,292 @@
+{
+    "designSystem": {
+      "name": "SmartGear Onboarding",
+      "description": "A design system profile extracted from the SmartGear account creation page, focusing on visual replication for AI models.",
+      "styleGuide": {
+        "colors": {
+          "primaryGreen": "#1ABC9C",
+          "darkGreen": "#1D5D46",
+          "accentYellow": "#B8D430",
+          "backgroundLightGray": "#F7F7F7",
+          "textDark": "#333333",
+          "textLight": "#FFFFFF",
+          "linkBlue": "#007BFF",
+          "inputBorder": "#CCCCCC",
+          "separatorLine": "#BBBBBB"
+        },
+        "typography": {
+          "fontFamily": "Inter, sans-serif",
+          "headings": {
+            "h1": {
+              "text": "Create Account",
+              "fontSize": "2rem",
+              "fontWeight": "bold",
+              "color": "#333333"
+            },
+            "h2": {
+              "text": "WELCOME TO SMARTGEAR",
+              "fontSize": "0.8rem",
+              "fontWeight": "normal",
+              "letterSpacing": "0.1em",
+              "textTransform": "uppercase",
+              "color": "#333333"
+            }
+          },
+          "bodyText": {
+            "default": {
+              "fontSize": "0.9rem",
+              "fontWeight": "normal",
+              "color": "#333333"
+            },
+            "link": {
+              "fontSize": "0.9rem",
+              "fontWeight": "normal",
+              "color": "#007BFF",
+              "textDecoration": "underline"
+            }
+          },
+          "inputLabels": {
+            "fontSize": "1rem",
+            "fontWeight": "normal",
+            "color": "#333333"
+          },
+          "buttonText": {
+            "fontSize": "1.1rem",
+            "fontWeight": "bold",
+            "color": "#FFFFFF"
+          },
+          "placeholderText": {
+            "fontSize": "1rem",
+            "fontWeight": "normal",
+            "color": "#999999"
+          }
+        },
+        "spacing": {
+          "padding": {
+            "small": "0.5rem",
+            "medium": "1rem",
+            "large": "2rem"
+          },
+          "margin": {
+            "small": "0.5rem",
+            "medium": "1rem",
+            "large": "2rem"
+          },
+          "gap": "1rem"
+        },
+        "borders": {
+          "inputUnderline": {
+            "style": "solid",
+            "width": "1px",
+            "color": "#CCCCCC"
+          },
+          "button": {
+            "radius": "0.5rem"
+          }
+        },
+        "shadows": {
+          "button": "0px 4px 6px rgba(0, 0, 0, 0.1)"
+        },
+        "overallAesthetic": "Clean, modern, minimalist with vibrant accents."
+      },
+      "layout": {
+        "type": "two-column",
+        "columnRatio": "1:1",
+        "leftColumn": {
+          "purpose": "Branding and Visuals",
+          "alignment": "center",
+          "backgroundElements": [
+            {
+              "shape": "circle",
+              "color": "#B8D430",
+              "position": "top-right",
+              "size": "large"
+            },
+            {
+              "shape": "circle",
+              "color": "#1ABC9C",
+              "position": "top-right",
+              "size": "medium"
+            },
+            {
+              "shape": "circle",
+              "color": "#1ABC9C",
+              "position": "bottom-left",
+              "size": "medium"
+            },
+            {
+              "shape": "circle",
+              "color": "#B8D430",
+              "position": "bottom-center",
+              "size": "small"
+            }
+          ]
+        },
+        "rightColumn": {
+          "purpose": "Form and Interaction",
+          "alignment": "left",
+          "padding": "2rem 3rem"
+        }
+      },
+      "components": [
+        {
+          "name": "LogoBlock",
+          "location": "leftColumn",
+          "elements": [
+            {
+              "type": "image",
+              "description": "Abstract leaf-like logo in dark green and bright green.",
+              "colorPalette": ["#1D5D46", "#1ABC9C"],
+              "shape": "organic, rounded"
+            },
+            {
+              "type": "text",
+              "content": "SMARTGEAR",
+              "style": "typography.headings.h1",
+              "color": "#333333",
+              "textTransform": "uppercase",
+              "letterSpacing": "0.1em"
+            }
+          ]
+        },
+        {
+          "name": "FormHeader",
+          "location": "rightColumn",
+          "elements": [
+            {
+              "type": "text",
+              "content": "WELCOME TO SMARTGEAR",
+              "style": "typography.headings.h2"
+            },
+            {
+              "type": "text",
+              "content": "Create Account",
+              "style": "typography.headings.h1"
+            }
+          ]
+        },
+        {
+          "name": "InputField",
+          "template": "common",
+          "elements": [
+            {
+              "type": "label",
+              "style": "typography.inputLabels"
+            },
+            {
+              "type": "input",
+              "style": {
+                "borderBottom": "borders.inputUnderline",
+                "paddingBottom": "0.5rem",
+                "marginBottom": "1.5rem",
+                "width": "100%"
+              },
+              "placeholderStyle": "typography.placeholderText"
+            }
+          ],
+          "instances": [
+            {"label": "Full Name", "placeholder": "Full Name"},
+            {"label": "Email Address", "placeholder": "Email Address"},
+            {"label": "Password", "placeholder": "Password", "type": "password"},
+            {"label": "Confirm Password", "placeholder": "Confirm Password", "type": "password"}
+          ]
+        },
+        {
+          "name": "TermsAndPolicyCheckbox",
+          "location": "rightColumn",
+          "elements": [
+            {
+              "type": "checkbox",
+              "checkedColor": "#1ABC9C",
+              "uncheckedColor": "#CCCCCC",
+              "icon": "check"
+            },
+            {
+              "type": "text",
+              "content": "I agree to the ",
+              "style": "typography.bodyText.default"
+            },
+            {
+              "type": "link",
+              "content": "TERMS OF SERVICES",
+              "style": "typography.bodyText.link"
+            },
+            {
+              "type": "text",
+              "content": " and ",
+              "style": "typography.bodyText.default"
+            },
+            {
+              "type": "link",
+              "content": "PRIVACY POLICY",
+              "style": "typography.bodyText.link"
+            }
+          ]
+        },
+        {
+          "name": "SignUpButton",
+          "location": "rightColumn",
+          "elements": [
+            {
+              "type": "button",
+              "content": "Sign Up",
+              "style": {
+                "backgroundColor": "colors.primaryGreen",
+                "color": "colors.textLight",
+                "padding": "0.8rem 2rem",
+                "borderRadius": "borders.button.radius",
+                "fontSize": "typography.buttonText.fontSize",
+                "fontWeight": "typography.buttonText.fontWeight",
+                "width": "100%",
+                "boxShadow": "shadows.button"
+              }
+            }
+          ]
+        },
+        {
+          "name": "SocialSignInSeparator",
+          "location": "rightColumn",
+          "elements": [
+            {
+              "type": "line",
+              "color": "colors.separatorLine",
+              "width": "40%"
+            },
+            {
+              "type": "text",
+              "content": "or Sign Up With",
+              "style": "typography.bodyText.default",
+              "color": "#999999"
+            },
+            {
+              "type": "line",
+              "color": "colors.separatorLine",
+              "width": "40%"
+            }
+          ],
+          "layout": "flex-row-center"
+        },
+        {
+          "name": "SocialSignInIcons",
+          "location": "rightColumn",
+          "elements": [
+            {
+              "type": "icon",
+              "description": "Google logo",
+              "source": "Google",
+              "size": "2rem",
+              "marginRight": "1rem"
+            },
+            {
+              "type": "icon",
+              "description": "Apple logo",
+              "source": "Apple",
+              "size": "2rem"
+            }
+          ],
+          "layout": "flex-row-center"
+        }
+      ]
+    }
+  }
+  
