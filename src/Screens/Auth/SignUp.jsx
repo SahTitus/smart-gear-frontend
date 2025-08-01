@@ -7,8 +7,10 @@ import AuthSplash from '../../components/Auth/AuthSplash';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    firstName: '',
+    lastName: '',
     email: '',
+    phone: '',
     password: '',
     confirmPassword: '',
   });
@@ -46,11 +48,7 @@ const SignUp = () => {
     setError('');
 
     try {
-      await register({
-        username: formData.username,
-        email: formData.email,
-        password: formData.password,
-      });
+      await register(formData);
       navigate('/');
     } catch (err) {
       console.error('SignUp error:', err);
@@ -95,9 +93,18 @@ const SignUp = () => {
           <form onSubmit={handleSubmit} className="space-y-5">
             <input
               type="text"
-              name="username"
-              placeholder="Username"
-              value={formData.username}
+              name="firstName"
+              placeholder="First Name"
+              value={formData.firstName}
+              onChange={handleChange}
+              required
+              className="w-full border-b-2 border-gray-300 text-sm text-gray-700 pb-2 outline-none hover:border-green-500 transition-all"
+            />
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Second Name"
+              value={formData.lastName}
               onChange={handleChange}
               required
               className="w-full border-b-2 border-gray-300 text-sm text-gray-700 pb-2 outline-none hover:border-green-500 transition-all"
@@ -107,6 +114,15 @@ const SignUp = () => {
               name="email"
               placeholder="Email Address"
               value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full border-b-2 border-gray-300 text-sm text-gray-700 pb-1 outline-none hover:border-green-500 transition-all"
+            />
+            <input
+              type="text"
+              name="phone"
+              placeholder="Phone Number"
+              value={formData.phone}
               onChange={handleChange}
               required
               className="w-full border-b-2 border-gray-300 text-sm text-gray-700 pb-1 outline-none hover:border-green-500 transition-all"

@@ -35,12 +35,13 @@ const Login = () => {
     setError('');
 
     try {
+      console.log(formData);
       await login(formData);
-      navigate(from, { replace: true });
+      navigate("/");
     } catch (err) {
       setError(err.message || 'Login failed. Please try again.');
     } finally {
-      setIsLoading(false);
+      setIsLoading(true);
     }
   };
 

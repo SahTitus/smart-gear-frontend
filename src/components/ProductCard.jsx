@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Heart, ShoppingCart, Eye, Star, StarHalf } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
+import cartService from '../services/cart';
 
 const ProductCard = ({ product }) => {
   const {
@@ -9,7 +10,7 @@ const ProductCard = ({ product }) => {
     name,
     price,
     originalPrice,
-    image,
+    images,
     rating,
     reviewCount,
     discount,
@@ -38,6 +39,7 @@ const ProductCard = ({ product }) => {
     e.preventDefault();
     e.stopPropagation();
     if (!isOutOfStock) {
+      cartService.addToCart({productId: id, quantity:5});
       addToCart(product);
     }
   };
@@ -128,7 +130,7 @@ const ProductCard = ({ product }) => {
       {/* Product Image */}
       <div className="relative bg-gray-50 h-64 flex items-center justify-center p-4">
         <img
-          src={image}
+          src={images[0]?.url}
           alt={name}
           className="max-w-full max-h-full object-contain transition-transform duration-300 group-hover:scale-110"
         />
@@ -171,7 +173,7 @@ const ProductCard = ({ product }) => {
           </span>
           {originalPrice && originalPrice > price && (
             <span className="text-sm text-gray-500 line-through">
-              ${originalPrice.toLocaleString()}
+              GHS{originalPrice.toLocaleString()}
             </span>
           )}
         </div>
