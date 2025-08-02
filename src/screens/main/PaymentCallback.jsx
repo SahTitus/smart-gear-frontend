@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import transactionService from '../../services/transactionService';
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 import { CheckCircle, XCircle, Loader2 } from 'lucide-react';
 import { useCart } from '../../context/CartContext';

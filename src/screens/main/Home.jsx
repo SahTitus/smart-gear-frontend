@@ -6,8 +6,8 @@ import FeaturedProducts from '../../components/FeaturedProducts';
 import NewsletterSection from '../../components/NewsletterSection';
 import DealsSection from '../../components/DealsSection';
 import Footer from '../../components/footer/Footer';
-import Brand from '../../components/Brand/Brand';
-import Navbar from '../../components/Navbar/Navbar';
+import Brand from '../../components/brand/Brand';
+import Navbar from '../../components/navbar/Navbar';
 import DealCard from '../../components/dDealCard/DealCard';
 
 const Home = () => {

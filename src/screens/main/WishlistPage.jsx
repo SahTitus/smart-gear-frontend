@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 import { Heart, Trash2, ShoppingCart } from 'lucide-react';
 import { useWishlist } from '../../context/WishlistContext';

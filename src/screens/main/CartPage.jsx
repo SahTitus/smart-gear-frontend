@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Trash2, Plus, Minus, Loader2 } from 'lucide-react';
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 import { useCart } from '../../context/CartContext';
 import orderService from '../../services/orderService';

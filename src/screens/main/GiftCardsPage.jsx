@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Navbar from '../../components/Navbar/Navbar';
+import Navbar from '../../components/navbar/Navbar';
 import Footer from '../../components/footer/Footer';
 import { Gift, CreditCard, ShoppingBag } from 'lucide-react';
 
@@ -50,8 +50,8 @@ const GiftCardsPage = () => {
                           key={amount}
                           onClick={() => setSelectedAmount(amount)}
                           className={`p-3 rounded-md border ${selectedAmount === amount
-                              ? 'border-green-500 bg-green-50 text-green-700'
-                              : 'border-gray-300 hover:border-gray-400'
+                            ? 'border-green-500 bg-green-50 text-green-700'
+                            : 'border-gray-300 hover:border-gray-400'
                             }`}
                         >
                           ${amount}
@@ -68,8 +68,8 @@ const GiftCardsPage = () => {
                           key={design.id}
                           onClick={() => setSelectedDesign(design.id)}
                           className={`p-3 rounded-md border ${selectedDesign === design.id
-                              ? 'border-green-500 bg-green-50'
-                              : 'border-gray-300 hover:border-gray-400'
+                            ? 'border-green-500 bg-green-50'
+                            : 'border-gray-300 hover:border-gray-400'
                             }`}
                         >
                           {design.name}
