@@ -3,9 +3,6 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 import { useAuth } from '../../context/AuthContext';
-
-// Assuming your logo image is in src/assets or public folder
-// If it's in public, you can use '/your-logo.png'
 import Logo from '../../assets/logo.png'; 
 import { Heart, Menu, Search, ShoppingCart, User, X, LogOut } from 'lucide-react';
 

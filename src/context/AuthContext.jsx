@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import authService from '../services/authService';
 
 const AuthContext = createContext();
@@ -16,27 +16,30 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Initialize auth state on app load
-  useEffect(() => {
-    const initializeAuth = async () => {
-      try {
-        if (authService.isAuthenticated()) {
-          const currentUser = await authService.getCurrentUser();
-          setUser(currentUser.user || currentUser);
-        }
-      } catch (error) {
-        console.error('Auth initialization error:', error);
-        // Clear invalid tokens
-        authService.logout();
-      } finally {
-        setLoading(false);
+  // Load user data on app initialization
+  const loadUser = useCallback(async () => {
+    try {
+      setLoading(true);
+      if (authService.isAuthenticated()) {
+        const currentUser = await authService.getCurrentUser();
+        setUser(currentUser?.user || currentUser);
+      } else {
+        setUser(null);
       }
-    };
-
-    initializeAuth();
+    } catch (err) {
+      console.error('Auth initialization error:', err);
+      setUser(null);
+      setError(err.message || 'Session invalid. Please log in.');
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  // Register function
+  // Run loadUser on component mount
+  useEffect(() => {
+    loadUser();
+  }, [loadUser]);
+
   const register = async (userData) => {
     try {
       setError(null);
@@ -44,15 +47,14 @@ export const AuthProvider = ({ children }) => {
       const response = await authService.register(userData);
       setUser(response.user);
       return response;
-    } catch (error) {
-      setError(error);
-      throw error;
+    } catch (err) {
+      setError(err.message || 'Registration failed.');
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  // Login function
   const login = async (credentials) => {
     try {
       setError(null);
@@ -60,26 +62,28 @@ export const AuthProvider = ({ children }) => {
       const response = await authService.login(credentials);
       setUser(response.user);
       return response;
-    } catch (error) {
-      setError(error);
-      throw error;
+    } catch (err) {
+      setError(err.message || 'Login failed.');
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  // Logout function
   const logout = async () => {
     try {
+      setLoading(true);
       await authService.logout();
       setUser(null);
       setError(null);
-    } catch (error) {
-      console.error('Logout error:', error);
+    } catch (err) {
+      console.error('Logout error:', err);
+      setError(err.message || 'Logout failed.');
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Update profile function
   const updateProfile = async (userData) => {
     try {
       setError(null);
@@ -87,65 +91,60 @@ export const AuthProvider = ({ children }) => {
       const response = await authService.updateProfile(userData);
       setUser(response.user);
       return response;
-    } catch (error) {
-      setError(error);
-      throw error;
+    } catch (err) {
+      setError(err.message || 'Profile update failed.');
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  // Update password function
   const updatePassword = async (passwordData) => {
     try {
       setError(null);
       setLoading(true);
       const response = await authService.updatePassword(passwordData);
       return response;
-    } catch (error) {
-      setError(error);
-      throw error;
+    } catch (err) {
+      setError(err.message || 'Password update failed.');
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  // Forgot password function
   const forgotPassword = async (email) => {
     try {
       setError(null);
       setLoading(true);
       const response = await authService.forgotPassword(email);
       return response;
-    } catch (error) {
-      setError(error);
-      throw error;
+    } catch (err) {
+      setError(err.message || 'Forgot password request failed.');
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  // Reset password function
   const resetPassword = async (resetData) => {
     try {
       setError(null);
       setLoading(true);
       const response = await authService.resetPassword(resetData);
       return response;
-    } catch (error) {
-      setError(error);
-      throw error;
+    } catch (err) {
+      setError(err.message || 'Password reset failed.');
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
-  // Check if user is authenticated
   const isAuthenticated = () => {
     return !!user && authService.isAuthenticated();
   };
 
-  // Clear error
   const clearError = () => {
     setError(null);
   };
@@ -163,6 +162,7 @@ export const AuthProvider = ({ children }) => {
     resetPassword,
     isAuthenticated,
     clearError,
+    loadUser,
   };
 
   return (
@@ -170,4 +170,4 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-}; 
+};

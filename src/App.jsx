@@ -18,8 +18,9 @@ import CategoriesPage from './Screens/Main/CategoriesPage'
 import DealsPage from './Screens/Main/DealsPage'
 import ShopsPage from './Screens/Main/ShopsPage'
 import GiftCardsPage from './Screens/Main/GiftCardsPage'
+import PaymentCallback from './Screens/Main/PaymentCallback'
 
-// Layout component that wraps all pages
+// Layout component wraps all pages
 const Layout = () => {
   return (
     <div>
@@ -38,7 +39,7 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<Layout />}>
                   <Route index element={<Home />} />
-                  
+
                   {/* Auth Routes - No authentication required */}
                   <Route path="signup" element={
                     <ProtectedRoute requireAuth={false}>
@@ -60,7 +61,7 @@ const App = () => {
                       <ResetPassword />
                     </ProtectedRoute>
                   } />
-                  
+
                   {/* Protected Routes - Authentication required */}
                   <Route path="search" element={
                     <ProtectedRoute>
@@ -100,6 +101,11 @@ const App = () => {
                   <Route path="gift-cards" element={
                     <ProtectedRoute>
                       <GiftCardsPage />
+                    </ProtectedRoute>
+                  } />
+                  <Route path="/payment/callback" element={
+                    <ProtectedRoute>
+                      <PaymentCallback />
                     </ProtectedRoute>
                   } />
                 </Route>

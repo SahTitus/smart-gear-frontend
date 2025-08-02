@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://smartgear.onrender.com/api';
+const BASE_URL = "https://smartgear.onrender.com/api";
 
-// Create axios instance
+// Create Axios instance for API calls
 const api = axios.create({
   baseURL: BASE_URL,
   headers: {
@@ -10,7 +10,7 @@ const api = axios.create({
   },
 });
 
-// Request interceptor to add auth token
+// Add auth token to requests
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
@@ -29,7 +29,7 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Clear token and redirect to login
+      // Clear token and redirect to login on 401
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       window.location.href = '/login';
@@ -38,4 +38,4 @@ api.interceptors.response.use(
   }
 );
 
-export default api; 
+export default api;

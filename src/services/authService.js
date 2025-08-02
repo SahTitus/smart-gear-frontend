@@ -4,24 +4,14 @@ class AuthService {
   // Register new user
   async register(userData) {
     try {
-      console.log('Registering user with data:', userData);
       const response = await api.post('/auth/register', userData);
-      console.log('Registration response:', response.data);
-      if (response.data.token) {
+      if (response.data.token && response.data.user) {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
       }
       return response.data;
     } catch (error) {
-      console.error('Registration error:', error);
-      console.error('Error response:', error.response);
-      if (error.response?.data) {
-        throw error.response.data;
-      } else if (error.message) {
-        throw { message: error.message };
-      } else {
-        throw { message: 'Registration failed. Please try again.' };
-      }
+      throw error.response?.data || { message: error.message || 'Registration failed.' };
     }
   }
 
@@ -29,13 +19,13 @@ class AuthService {
   async login(credentials) {
     try {
       const response = await api.post('/auth/login', credentials);
-      if (response.data.token) {
+      if (response.data.token && response.data.user) {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
       }
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data || { message: error.message || 'Login failed.' };
     }
   }
 
@@ -44,20 +34,20 @@ class AuthService {
     try {
       await api.post('/auth/logout');
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error('Backend logout error (if applicable):', error);
     } finally {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
     }
   }
 
-  // Get current user
+  // Get current user data from backend
   async getCurrentUser() {
     try {
       const response = await api.get('/auth/me');
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data || { message: error.message || 'Failed to fetch current user.' };
     }
   }
 
@@ -65,13 +55,12 @@ class AuthService {
   async updateProfile(userData) {
     try {
       const response = await api.patch('/auth/update-me', userData);
-      // Update stored user data
-      const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
-      const updatedUser = { ...currentUser, ...response.data.user };
-      localStorage.setItem('user', JSON.stringify(updatedUser));
+      if (response.data.user) {
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+      }
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data || { message: error.message || 'Profile update failed.' };
     }
   }
 
@@ -81,17 +70,17 @@ class AuthService {
       const response = await api.patch('/auth/update-password', passwordData);
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data || { message: error.message || 'Password update failed.' };
     }
   }
 
-  // Request password reset
+  // Request password reset email
   async forgotPassword(email) {
     try {
       const response = await api.post('/auth/forgot-password', { email });
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data || { message: error.message || 'Forgot password request failed.' };
     }
   }
 
@@ -101,17 +90,17 @@ class AuthService {
       const response = await api.patch('/auth/reset-password', resetData);
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data || { message: error.message || 'Password reset failed.' };
     }
   }
 
-  // Check if user is authenticated
+  // Check if token exists in localStorage
   isAuthenticated() {
     const token = localStorage.getItem('token');
     return !!token;
   }
 
-  // Get current user from localStorage
+  // Get user data from localStorage
   getCurrentUserFromStorage() {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
@@ -123,4 +112,4 @@ class AuthService {
   }
 }
 
-export default new AuthService(); 
+export default new AuthService();

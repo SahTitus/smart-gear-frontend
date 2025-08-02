@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Trash2, Plus, Minus, CreditCard, MapPin, Phone, User, AlertCircle, CheckCircle, X, Loader2 } from 'lucide-react';
+import { useState } from 'react';
+import { Trash2, Plus, Minus, Loader2 } from 'lucide-react';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
 import { useCart } from '../../context/CartContext';
@@ -7,219 +7,10 @@ import orderService from '../../services/orderService';
 import transactionService from '../../services/transactionService';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-
-// Confirmation Modal Component
-const CheckoutModal = ({ isOpen, onClose, onConfirm, orderSummary, isLoading }) => {
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg max-w-md w-full max-h-[80vh] overflow-y-auto">
-        <div className="p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold text-gray-800">Confirm Your Order</h2>
-            <button
-              onClick={onClose}
-              className="text-gray-400 hover:text-gray-600"
-              disabled={isLoading}
-            >
-              <X size={24} />
-            </button>
-          </div>
-
-          {/* Order Summary */}
-          <div className="mb-6">
-            <h3 className="font-semibold mb-3 text-gray-700">Order Items:</h3>
-            <div className="space-y-2 mb-4">
-              {orderSummary.items.map((item) => (
-                <div key={item.id} className="flex justify-between text-sm">
-                  <span>{item.name} x{item.quantity}</span>
-                  <span>GHS{(item.price * item.quantity).toFixed(2)}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="border-t pt-3 space-y-2">
-              <div className="flex justify-between text-sm">
-                <span>Subtotal:</span>
-                <span>GHS{orderSummary.subtotal.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span>Tax (8%):</span>
-                <span>GHS{orderSummary.tax.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between font-bold">
-                <span>Total:</span>
-                <span>GHS{orderSummary.total.toFixed(2)}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Shipping Address */}
-          <div className="mb-6">
-            <h3 className="font-semibold mb-2 text-gray-700 flex items-center">
-              <MapPin size={16} className="mr-1" />
-              Delivery Address:
-            </h3>
-            <div className="bg-gray-50 p-3 rounded text-sm">
-              <p>{orderSummary.shippingAddress.firstName} {orderSummary.shippingAddress.lastName}</p>
-              <p>{orderSummary.shippingAddress.street}</p>
-              <p>{orderSummary.shippingAddress.city}, {orderSummary.shippingAddress.region}</p>
-              <p>{orderSummary.shippingAddress.country} {orderSummary.shippingAddress.postalCode}</p>
-              <p className="flex items-center mt-1">
-                <Phone size={14} className="mr-1" />
-                {orderSummary.shippingAddress.phone}
-              </p>
-            </div>
-          </div>
-
-          {/* Payment Method */}
-          <div className="mb-6">
-            <h3 className="font-semibold mb-2 text-gray-700 flex items-center">
-              <CreditCard size={16} className="mr-1" />
-              Payment Method:
-            </h3>
-            <div className="bg-gray-50 p-3 rounded text-sm">
-              <p className="capitalize">{orderSummary.paymentMethod.replace('_', ' ')}</p>
-            </div>
-          </div>
-
-          {/* Special Notes */}
-          {orderSummary.notes && (
-            <div className="mb-6">
-              <h3 className="font-semibold mb-2 text-gray-700">Special Instructions:</h3>
-              <div className="bg-gray-50 p-3 rounded text-sm">
-                <p>{orderSummary.notes}</p>
-              </div>
-            </div>
-          )}
-
-          {/* Action Buttons */}
-          <div className="flex space-x-3">
-            <button
-              onClick={onClose}
-              disabled={isLoading}
-              className="flex-1 py-3 px-4 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors disabled:opacity-50"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={onConfirm}
-              disabled={isLoading}
-              className="flex-1 bg-green-500 text-white py-3 px-4 rounded-md hover:bg-green-600 transition-colors font-semibold disabled:opacity-50 flex items-center justify-center"
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 size={16} className="animate-spin mr-2" />
-                  Placing Order...
-                </>
-              ) : (
-                'Confirm Order'
-              )}
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Success Modal Component
-const SuccessModal = ({ isOpen, onClose, onInitiatePayment, isLoading, orderId }) => {
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg max-w-md w-full p-6">
-        <div className="text-center">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <CheckCircle size={32} className="text-green-500" />
-          </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Order Confirmed!</h2>
-          <p className="text-gray-600 mb-4">
-            Your order has been placed successfully. Please proceed to payment.
-          </p>
-          {orderId && (
-            <p className="text-sm text-gray-500 mb-6">
-              Order ID: <span className="font-mono font-semibold">{orderId}</span>
-            </p>
-          )}
-          <button
-            onClick={onInitiatePayment}
-            disabled={isLoading}
-            className="w-full bg-green-500 text-white py-3 px-4 rounded-md hover:bg-green-600 transition-colors font-semibold disabled:opacity-50 flex items-center justify-center"
-          >
-            {isLoading ? (
-              <>
-                <Loader2 size={16} className="animate-spin mr-2" />
-                Initializing Payment...
-              </>
-            ) : (
-              'Initiate Payment'
-            )}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Payment Success Modal Component
-const PaymentSuccessModal = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg max-w-md w-full p-6">
-        <div className="text-center">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <CheckCircle size={32} className="text-green-500" />
-          </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Payment Successful!</h2>
-          <p className="text-gray-600 mb-4">
-            Thank you for your purchase. Your order is now being processed.
-          </p>
-          <button
-            onClick={onClose}
-            className="w-full bg-green-500 text-white py-3 px-4 rounded-md hover:bg-green-600 transition-colors font-semibold"
-          >
-            Continue Shopping
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// Error Modal Component
-const ErrorModal = ({ isOpen, onClose, error }) => {
-  if (!isOpen) return null;
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg max-w-md w-full p-6">
-        <div className="text-center">
-          <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <AlertCircle size={32} className="text-red-500" />
-          </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Order Failed</h2>
-          <p className="text-gray-600 mb-4">
-            There was an error processing your order. Please try again.
-          </p>
-          <p className="text-sm text-red-600 mb-6 bg-red-50 p-3 rounded">
-            {error}
-          </p>
-          <button
-            onClick={onClose}
-            className="w-full bg-red-500 text-white py-3 px-4 rounded-md hover:bg-red-600 transition-colors font-semibold"
-          >
-            Try Again
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
+import { PaymentSuccessModal } from '../../components/modall/PaymentSuccessModal';
+import { PaymentInitiatedModal } from '../../components/modall/PaymentInitiatedModal';
+import { ErrorModal } from '../../components/modall/ErrorModal';
+import { CheckoutModal } from '../../components/modall/CheckoutModal';
 
 const CartPage = () => {
   const {
@@ -233,15 +24,16 @@ const CartPage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
 
-  // Modal states
   const [showCheckoutModal, setShowCheckoutModal] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showPaymentInitiatedModal, setShowPaymentInitiatedModal] = useState(false);
   const [showPaymentSuccessModal, setShowPaymentSuccessModal] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [orderId, setOrderId] = useState('');
+  const [paymentUrl, setPaymentUrl] = useState(''); // To store the URL from Paystack
 
+  // Derive shipping address
   const shippingAddress = user?.data?.user?.address ? {
     firstName: user.data.user.firstName,
     lastName: user.data.user.lastName,
@@ -262,6 +54,7 @@ const CartPage = () => {
     postalCode: "00233",
   };
 
+  // Static order data
   const orderData = {
     shippingAddress: shippingAddress,
     paymentMethod: "mobile_money",
@@ -281,6 +74,16 @@ const CartPage = () => {
   };
 
   const handleCheckoutClick = () => {
+    if (!user) {
+      // Redirect to login if not authenticated
+      navigate('/login?redirect=/cart'); // Or show a prompt
+      return;
+    }
+    if (cartItems.length === 0) {
+      setError("Your cart is empty. Please add items before checking out.");
+      setShowErrorModal(true);
+      return;
+    }
     setShowCheckoutModal(true);
   };
 
@@ -300,47 +103,26 @@ const CartPage = () => {
         total: (getTotalPrice() * 1.08) // Total is calculated on the frontend for display
       };
 
-      const result = await orderService.createOrder(orderPayload);
+      const orderResult = await orderService.createOrder(orderPayload);
+      const createdOrderId = orderResult.data.order._id;
+      setOrderId(createdOrderId);
 
-      setOrderId(result.data.order._id);
+      // Initiate payment for new order
+      const paymentInitiationResponse = await transactionService.initializePayment({
+        orderId: createdOrderId
+      });
+
+      const paystackPaymentUrl = paymentInitiationResponse.data.paymentUrl;
+      setPaymentUrl(paystackPaymentUrl);
+
       setShowCheckoutModal(false);
-      setShowSuccessModal(true);
-      clearCart();
+      setShowPaymentInitiatedModal(true); // Show go to payment modal
+      clearCart(); // Clear cart after order is successfully placed and payment initiated
+
     } catch (err) {
-      setError(err.message);
+      console.error("Checkout process error:", err);
+      setError(err.response?.data?.message || err.message || 'An unexpected error occurred during checkout.');
       setShowCheckoutModal(false);
-      setShowErrorModal(true);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleInitiatePayment = async () => {
-    setIsLoading(true);
-    setError('');
-
-    try {
-      if (!orderId) {
-        throw new Error('Order ID is missing.');
-      }
-      const paymentPayload = { orderId: orderId };
-      const initiatePaymentResponse = await transactionService.initializePayment(paymentPayload);
-      const reference = initiatePaymentResponse.data.reference;
-
-      // Assuming successful initiation, now verify the payment.
-      // In a real application, you'd redirect the user to paymentUrl, 
-      // and verification would happen on a webhook or after user redirection.
-      const verifyPaymentResponse = await transactionService.verifyPayment(reference);
-
-      if (verifyPaymentResponse.data.transaction.status === 'success') {
-        setShowSuccessModal(false);
-        setShowPaymentSuccessModal(true);
-      } else {
-        throw new Error('Payment verification failed.');
-      }
-    } catch (err) {
-      setError(err.message);
-      setShowSuccessModal(false);
       setShowErrorModal(true);
     } finally {
       setIsLoading(false);
@@ -376,7 +158,7 @@ const CartPage = () => {
                   {cartItems.map((item) => (
                     <div key={item.id} className="flex items-center p-6 border-b border-gray-200 last:border-b-0">
                       <div className="bg-gray-200 w-20 h-20 rounded-md flex items-center justify-center mr-4">
-                        <span className="text-gray-500 text-xs text-center px-1">{item.name}</span>
+                        <img src={item.imageUrl || "/placeholder.png"} alt={item.name} className="w-full h-full object-cover rounded-md" />
                       </div>
                       <div className="flex-1">
                         <h3 className="font-semibold text-lg">{item.name}</h3>
@@ -479,19 +261,21 @@ const CartPage = () => {
         isLoading={isLoading}
       />
 
-      <SuccessModal
-        isOpen={showSuccessModal}
-        onClose={() => setShowSuccessModal(false)}
-        onInitiatePayment={handleInitiatePayment}
-        isLoading={isLoading}
+      {/* Go to payment modal */}
+      <PaymentInitiatedModal
+        isOpen={showPaymentInitiatedModal}
+        onClose={() => setShowPaymentInitiatedModal(false)}
         orderId={orderId}
+        paymentUrl={paymentUrl}
+        isLoading={isLoading} //  Disable button while redirecting
       />
 
+      {/* Payment Success Modal */}
       <PaymentSuccessModal
         isOpen={showPaymentSuccessModal}
         onClose={() => {
           setShowPaymentSuccessModal(false);
-          navigate('/');
+          navigate('/'); // Navigate home
         }}
       />
 

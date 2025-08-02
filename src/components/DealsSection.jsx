@@ -8,10 +8,6 @@ const DealsSection = () => {
     type: 'all',
     limit: 5,
     sort: '-createdAt', // Sort by newest first
-    filters: {
-      // Note: The backend should handle discount filtering
-      // For now, we'll fetch all active products and filter on frontend if needed
-    }
   });
 
   const deals = [
