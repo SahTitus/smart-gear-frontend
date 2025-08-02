@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
-import controllerImage from '@/assets/categories/gaming.svg'; // Update path as needed
+import controllerImage from '../../assets/categories/gaming.svg';
 
 const DealCard = () => {
   return (

@@ -1,8 +1,8 @@
 import CategoryCard from './CategoryCard';
-import Laptop from '@/assets/categories/laptop.png';
-import Gaming from '@/assets/categories/gaming.svg';
-import Phone from '@/assets/categories/phone.svg';
-import Headphones from '@/assets/categories/headphones.svg';
+import Laptop from '../../assets/categories/laptop.png';
+import Gaming from '../../assets/categories/gaming.svg';
+import Phone from '../../assets/categories/phone.svg';
+import Headphones from '../../assets/categories/headphones.svg';
 import { ChevronRight } from 'lucide-react';
 
 const CategorySection = () => {
