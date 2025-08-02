@@ -1,7 +1,5 @@
 import React from 'react';
-import AppleLogo from '../../assets/Ellipse1.png'; // Assuming your Apple logo image is here
-import iPhone from '../../assets/Ellipse2.png'; // Assuming your Apple logo image is here
-
+import AppleLogo from '../../assets/Ellipse1.png';
 const BrandSection = () => {
   return (
     <div className="relative min-w-[400px] h-[250px] bg-gray-800 rounded-3xl overflow-hidden shadow-xl font-sans text-white flex items-center">

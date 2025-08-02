@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from '../../components/Navbar/Navbar';
-import Footer from '../../components/Footer/Footer';
+import Footer from '../../components/footer/Footer';
 import { Heart, Trash2, ShoppingCart } from 'lucide-react';
 import { useWishlist } from '../../context/WishlistContext';
 import { useCart } from '../../context/CartContext';
@@ -24,7 +24,7 @@ const WishlistPage = () => {
       <div className="wrapper py-8">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-3xl font-bold text-gray-800 mb-6">My Wishlist</h1>
-          
+
           {wishlistItems.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {wishlistItems.map((item) => (

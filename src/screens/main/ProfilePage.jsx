@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import Navbar from '../../components/Navbar/Navbar';
-import Footer from '../../components/Footer/Footer';
+import Footer from '../../components/footer/Footer';
 import { User, Mail, Phone, MapPin, Edit, Save, X, Lock, AlertCircle } from 'lucide-react';
 
 const ProfilePage = () => {
@@ -78,7 +78,7 @@ const ProfilePage = () => {
 
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();
-    
+
     if (passwordData.newPassword !== passwordData.confirmPassword) {
       setError('New passwords do not match');
       return;
@@ -125,7 +125,7 @@ const ProfilePage = () => {
                 {error || authError}
               </div>
             )}
-            
+
             {success && (
               <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded">
                 {success}

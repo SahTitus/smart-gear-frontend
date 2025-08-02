@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from '../../components/Navbar/Navbar';
-import Footer from '../../components/Footer/Footer';
+import Footer from '../../components/footer/Footer';
 import { Store, Star, MapPin } from 'lucide-react';
 
 const ShopsPage = () => {
@@ -49,7 +49,7 @@ const ShopsPage = () => {
       <div className="wrapper py-8">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-3xl font-bold text-gray-800 mb-6">Featured Shops</h1>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {shops.map((shop) => (
               <div key={shop.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">

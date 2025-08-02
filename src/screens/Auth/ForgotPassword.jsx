@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import AuthSplash from '../../components/Auth/AuthSplash';
+import AuthSplash from '../../components/auth/AuthSplash';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -69,7 +69,7 @@ const ForgotPassword = () => {
                 Enter your email address and we'll send you a link to reset your password.
               </p>
             </div>
-            
+
             <input
               type="email"
               name="email"
@@ -79,10 +79,10 @@ const ForgotPassword = () => {
               required
               className="w-full border-b-2 border-gray-300 text-sm text-gray-700 pb-2 outline-none hover:border-green-500 transition-all"
             />
-            
+
             {/* Submit Button */}
             <div className="">
-              <button 
+              <button
                 type="submit"
                 disabled={isLoading}
                 className="btn-background text-white font-semibold py-2 px-6 rounded-full transition-all w-full disabled:opacity-50 disabled:cursor-not-allowed"

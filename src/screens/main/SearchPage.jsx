@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Navbar from '../../components/Navbar/Navbar';
-import Footer from '../../components/Footer/Footer';
+import Footer from '../../components/footer/Footer';
 import ProductCard from '../../components/ProductCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import useProducts from '../../hooks/useProducts';
@@ -24,7 +24,7 @@ const SearchPage = () => {
           <h1 className="text-3xl font-bold text-gray-800 mb-6">
             Search Results for "{query}"
           </h1>
-          
+
           {loading ? (
             <div className="flex justify-center items-center py-12">
               <LoadingSpinner />
@@ -32,8 +32,8 @@ const SearchPage = () => {
           ) : error ? (
             <div className="text-center py-12">
               <p className="text-red-600 mb-4">{error}</p>
-              <button 
-                onClick={refetch} 
+              <button
+                onClick={refetch}
                 className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
               >
                 Try Again
@@ -55,8 +55,8 @@ const SearchPage = () => {
               <p className="text-gray-500 text-lg">No results found for "{query}"</p>
               <p className="text-gray-400 mt-2">Try different keywords or browse our categories</p>
               <div className="mt-6">
-                <a 
-                  href="/categories" 
+                <a
+                  href="/categories"
                   className="inline-block bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors"
                 >
                   Browse Categories

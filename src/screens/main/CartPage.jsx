@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { Trash2, Plus, Minus, Loader2 } from 'lucide-react';
 import Navbar from '../../components/Navbar/Navbar';
-import Footer from '../../components/Footer/Footer';
+import Footer from '../../components/footer/Footer';
 import { useCart } from '../../context/CartContext';
 import orderService from '../../services/orderService';
 import transactionService from '../../services/transactionService';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { PaymentSuccessModal } from '../../components/modall/PaymentSuccessModal';
-import { PaymentInitiatedModal } from '../../components/modall/PaymentInitiatedModal';
-import { ErrorModal } from '../../components/modall/ErrorModal';
-import { CheckoutModal } from '../../components/modall/CheckoutModal';
+import { PaymentSuccessModal } from '../../components/modal/PaymentSuccessModal';
+import { PaymentInitiatedModal } from '../../components/modal/PaymentInitiatedModal';
+import { ErrorModal } from '../../components/modal/ErrorModal';
+import { CheckoutModal } from '../../components/modal/CheckoutModal';
 
 const CartPage = () => {
   const {

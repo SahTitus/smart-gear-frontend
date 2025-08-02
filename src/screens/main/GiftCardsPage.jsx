@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
-import Footer from '../../components/Footer/Footer';
+import Footer from '../../components/footer/Footer';
 import { Gift, CreditCard, ShoppingBag } from 'lucide-react';
 
 const GiftCardsPage = () => {
@@ -21,7 +21,7 @@ const GiftCardsPage = () => {
       <div className="wrapper py-8">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-3xl font-bold text-gray-800 mb-6">Gift Cards</h1>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Gift Card Preview */}
             <div className="lg:col-span-1">
@@ -40,7 +40,7 @@ const GiftCardsPage = () => {
                     <p className="text-sm opacity-90 mt-2">Available for any purchase</p>
                   </div>
                 </div>
-                
+
                 <div className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Select Amount</label>
@@ -49,18 +49,17 @@ const GiftCardsPage = () => {
                         <button
                           key={amount}
                           onClick={() => setSelectedAmount(amount)}
-                          className={`p-3 rounded-md border ${
-                            selectedAmount === amount
+                          className={`p-3 rounded-md border ${selectedAmount === amount
                               ? 'border-green-500 bg-green-50 text-green-700'
                               : 'border-gray-300 hover:border-gray-400'
-                          }`}
+                            }`}
                         >
                           ${amount}
                         </button>
                       ))}
                     </div>
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">Select Design</label>
                     <div className="grid grid-cols-2 gap-2">
@@ -68,11 +67,10 @@ const GiftCardsPage = () => {
                         <button
                           key={design.id}
                           onClick={() => setSelectedDesign(design.id)}
-                          className={`p-3 rounded-md border ${
-                            selectedDesign === design.id
+                          className={`p-3 rounded-md border ${selectedDesign === design.id
                               ? 'border-green-500 bg-green-50'
                               : 'border-gray-300 hover:border-gray-400'
-                          }`}
+                            }`}
                         >
                           {design.name}
                         </button>
@@ -87,7 +85,7 @@ const GiftCardsPage = () => {
             <div className="lg:col-span-1">
               <div className="bg-white rounded-lg shadow-md p-6">
                 <h2 className="text-xl font-bold mb-4">Purchase Options</h2>
-                
+
                 <div className="space-y-4 mb-6">
                   <div className="flex items-center p-4 border border-gray-200 rounded-lg hover:border-green-500 cursor-pointer">
                     <CreditCard className="text-green-500 mr-3" size={24} />
@@ -96,7 +94,7 @@ const GiftCardsPage = () => {
                       <p className="text-sm text-gray-600">Instant delivery to recipient's email</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center p-4 border border-gray-200 rounded-lg hover:border-green-500 cursor-pointer">
                     <ShoppingBag className="text-green-500 mr-3" size={24} />
                     <div>

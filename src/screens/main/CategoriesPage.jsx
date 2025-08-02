@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Search, Filter, Grid, List, Star, TrendingUp, Clock, Zap } from 'lucide-react';
+import { useState } from 'react';
+import { Search, Grid, List, Star, TrendingUp, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import CategoryCard from '../../components/Categories/CategoryCard';
 import Laptop from '../../assets/categories/laptop.png';
 import Gaming from '../../assets/categories/gaming.svg';
 import Phone from '../../assets/categories/phone.svg';
@@ -130,13 +129,13 @@ const CategoriesPage = () => {
   const filteredCategories = categories
     .filter(category => {
       const matchesSearch = category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          category.description.toLowerCase().includes(searchTerm.toLowerCase());
-      
+        category.description.toLowerCase().includes(searchTerm.toLowerCase());
+
       let matchesFilter = true;
       if (selectedFilter === 'trending') matchesFilter = category.isTrending;
       if (selectedFilter === 'new') matchesFilter = category.isNew;
       if (selectedFilter === 'discount') matchesFilter = category.discount > 0;
-      
+
       return matchesSearch && matchesFilter;
     })
     .sort((a, b) => {
@@ -167,7 +166,7 @@ const CategoriesPage = () => {
               Explore Our Categories
             </h1>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Discover the perfect tech products across our carefully curated categories. 
+              Discover the perfect tech products across our carefully curated categories.
               From cutting-edge gadgets to essential accessories, find everything you need.
             </p>
           </div>
@@ -194,11 +193,10 @@ const CategoriesPage = () => {
                   <button
                     key={filter.id}
                     onClick={() => setSelectedFilter(filter.id)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all ${
-                      selectedFilter === filter.id
+                    className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-all ${selectedFilter === filter.id
                         ? 'bg-green-600 text-white border-green-600'
                         : 'bg-white text-gray-700 border-gray-300 hover:border-green-500 hover:text-green-600'
-                    }`}
+                      }`}
                   >
                     <IconComponent className="w-4 h-4" />
                     <span className="hidden sm:inline">{filter.label}</span>
@@ -224,17 +222,15 @@ const CategoriesPage = () => {
               <div className="flex border border-gray-300 rounded-lg overflow-hidden">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-2 transition-colors ${
-                    viewMode === 'grid' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:text-green-600'
-                  }`}
+                  className={`p-2 transition-colors ${viewMode === 'grid' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:text-green-600'
+                    }`}
                 >
                   <Grid className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-2 transition-colors ${
-                    viewMode === 'list' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:text-green-600'
-                  }`}
+                  className={`p-2 transition-colors ${viewMode === 'list' ? 'bg-green-600 text-white' : 'bg-white text-gray-600 hover:text-green-600'
+                    }`}
                 >
                   <List className="w-4 h-4" />
                 </button>
@@ -252,7 +248,7 @@ const CategoriesPage = () => {
             Showing <span className="font-semibold">{filteredCategories.length}</span> categories
             {searchTerm && ` for "${searchTerm}"`}
           </p>
-          
+
           {selectedFilter !== 'all' && (
             <div className="flex items-center gap-2">
               <span className="text-sm text-gray-500">Filtered by:</span>
@@ -265,18 +261,16 @@ const CategoriesPage = () => {
 
         {/* Categories Display */}
         {filteredCategories.length > 0 ? (
-          <div className={`grid gap-6 ${
-            viewMode === 'grid' 
-              ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
+          <div className={`grid gap-6 ${viewMode === 'grid'
+              ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
               : 'grid-cols-1'
-          }`}>
+            }`}>
             {filteredCategories.map((category) => (
               <div
                 key={category.id}
                 onClick={() => handleCategoryClick(category)}
-                className={`bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group ${
-                  viewMode === 'list' ? 'flex items-center p-6' : 'p-6'
-                }`}
+                className={`bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group ${viewMode === 'list' ? 'flex items-center p-6' : 'p-6'
+                  }`}
               >
                 {viewMode === 'grid' ? (
                   // Grid View
@@ -287,7 +281,7 @@ const CategoriesPage = () => {
                         alt={category.name}
                         className="w-full h-48 object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
                       />
-                      
+
                       {/* Badges */}
                       <div className="absolute top-2 left-2 flex gap-2">
                         {category.isTrending && (
@@ -307,7 +301,7 @@ const CategoriesPage = () => {
                         )}
                       </div>
                     </div>
-                    
+
                     <div>
                       <h3 className="font-semibold text-lg text-gray-900 group-hover:text-green-600 transition-colors">
                         {category.name}
@@ -315,7 +309,7 @@ const CategoriesPage = () => {
                       <p className="text-gray-600 text-sm mt-1 line-clamp-2">
                         {category.description}
                       </p>
-                      
+
                       <div className="flex items-center justify-between mt-3">
                         <div className="flex items-center gap-1">
                           <Star className="w-4 h-4 text-yellow-400 fill-current" />
@@ -333,7 +327,7 @@ const CategoriesPage = () => {
                       alt={category.name}
                       className="w-20 h-20 object-cover rounded-lg"
                     />
-                    
+
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="font-semibold text-lg text-gray-900 group-hover:text-green-600 transition-colors">
@@ -347,7 +341,7 @@ const CategoriesPage = () => {
                       </div>
                       <p className="text-gray-600 text-sm">{category.description}</p>
                     </div>
-                    
+
                     <div className="text-right">
                       <div className="flex items-center gap-1 mb-1">
                         <Star className="w-4 h-4 text-yellow-400 fill-current" />

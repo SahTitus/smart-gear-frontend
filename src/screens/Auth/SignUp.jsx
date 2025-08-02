@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import google from '../../assets/signin/google.svg';
 import apple from '../../assets/signin/Frame 5.svg';
-import AuthSplash from '../../components/Auth/AuthSplash';
+import AuthSplash from '../../components/auth/AuthSplash';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -33,7 +33,7 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!agreeToTerms) {
       setError('Please agree to the terms of service and privacy policy');
       return;
@@ -146,21 +146,21 @@ const SignUp = () => {
               className="w-full border-b-2 border-gray-300 text-sm text-gray-700 pb-1 outline-none hover:border-green-500 transition-all"
             />
             <div className="flex gap-2 whitespace-break-spaces text-[12px]">
-              <input 
-                type="checkbox" 
+              <input
+                type="checkbox"
                 checked={agreeToTerms}
                 onChange={(e) => setAgreeToTerms(e.target.checked)}
-                className="mt-1 accent-teal-500 border-xl w-4 h-4 " 
+                className="mt-1 accent-teal-500 border-xl w-4 h-4 "
               />
               <p className="text-sm text-gray-700">
                 I agree to the <span className="text-green-500 underline hover:text-green-600 cursor-pointer pr-1">term of service</span>
-                 and 
+                and
                 <span className="text-green-500  underline hover:text-green-600 cursor-pointer pl-1">privacy policy</span>
               </p>
             </div>
             {/* Submit Button */}
             <div className="">
-              <button 
+              <button
                 type="submit"
                 disabled={isLoading}
                 className="btn-background text-white font-semibold py-2 px-6 rounded-full transition-all w-full disabled:opacity-50 disabled:cursor-not-allowed"
@@ -177,7 +177,7 @@ const SignUp = () => {
               </div>
               <div className="flex items-center w-full justify-center gap-3">
                 <button className='cursor-pointer'>
-                  <img src={apple} alt="apple logo" className='w-7 h-7'/>
+                  <img src={apple} alt="apple logo" className='w-7 h-7' />
                 </button>
                 <button className='cursor-pointer'>
                   <img src={google} alt="google logo" className='w-7 h-7' />
@@ -190,8 +190,8 @@ const SignUp = () => {
               </Link>
             </div>
           </form>
-                </div>
         </div>
+      </div>
     </div>
   );
 };

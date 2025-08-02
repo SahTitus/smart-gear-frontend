@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import google from '../../assets/signin/google.svg';
 import apple from '../../assets/signin/Frame 5.svg';
-import AuthSplash from '../../components/Auth/AuthSplash';
+import AuthSplash from '../../components/auth/AuthSplash';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -87,10 +87,10 @@ const Login = () => {
               required
               className="w-full border-b-2 border-gray-300 text-sm text-gray-700 pb-1 outline-none hover:border-green-500 transition-all"
             />
-            
+
             {/* Submit Button */}
             <div className="">
-              <button 
+              <button
                 type="submit"
                 disabled={isLoading}
                 className="btn-background text-white font-semibold py-2 px-6 rounded-full transition-all w-full disabled:opacity-50 disabled:cursor-not-allowed"
@@ -115,7 +115,7 @@ const Login = () => {
               </div>
               <div className="flex items-center w-full justify-center gap-3">
                 <button type="button" className='cursor-pointer'>
-                  <img src={apple} alt="apple logo" className='w-7 h-7'/>
+                  <img src={apple} alt="apple logo" className='w-7 h-7' />
                 </button>
                 <button type="button" className='cursor-pointer'>
                   <img src={google} alt="google logo" className='w-7 h-7' />
