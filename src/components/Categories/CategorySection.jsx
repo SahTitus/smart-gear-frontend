@@ -1,4 +1,3 @@
-import React from 'react';
 import CategoryCard from './CategoryCard';
 import Laptop from '@/assets/categories/laptop.png';
 import Gaming from '@/assets/categories/gaming.svg';
