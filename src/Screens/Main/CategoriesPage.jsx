@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Search, Filter, Grid, List, Star, TrendingUp, Clock, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import CategoryCard from '../../components/Categories/CategoryCard';
-import Laptop from '../../assets/Categories/laptop.png';
-import Gaming from '../../assets/Categories/gaming.svg';
-import Phone from '../../assets/Categories/phone.svg';
-import Headphones from '../../assets/Categories/headphones.svg';
+import Laptop from '../../assets/categories/laptop.png';
+import Gaming from '../../assets/categories/gaming.svg';
+import Phone from '../../assets/categories/phone.svg';
+import Headphones from '../../assets/categories/headphones.svg';
 
 const CategoriesPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
