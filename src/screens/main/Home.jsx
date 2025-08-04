@@ -8,7 +8,7 @@ import DealsSection from '../../components/DealsSection';
 import Footer from '../../components/footer/Footer';
 import Brand from '../../components/brand/Brand';
 import Navbar from '../../components/navbar/Navbar';
-import DealCard from '../../components/dDealCard/DealCard';
+import DealCard from '../../components/dealCard/DealCard';
 
 const Home = () => {
   return (
